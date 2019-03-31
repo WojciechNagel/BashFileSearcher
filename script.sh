@@ -58,7 +58,7 @@ setContent5() {
 
 search() {
   echo "Search result: "
-  find $DIRECTORY2 -type f -size +"$BIGGERTHAN3"k -size -"$SMALLERTHAN4"k -name "$FILENAME1" -exec du -ah {} \; -exec grep -iRl $CONTENT5 $DIRECTORY {} \; -exec echo {} \;
+  find $DIRECTORY2 -type f -size +"$BIGGERTHAN3"k -size -"$SMALLERTHAN4"k -name "$FILENAME1" -exec grep -iRl $CONTENT5 $DIRECTORY {} \; -exec du -ah {} \;
   echo "------Executed command------"
   echo "find $DIRECTORY2 -type f -size +"$BIGGERTHAN3"k -size -"$SMALLERTHAN4"k -name "$FILENAME1" -exec du -ah {} \; -exec grep -Ril "$CONTENT5" {} \;"
 }
