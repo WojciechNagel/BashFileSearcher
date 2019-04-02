@@ -57,10 +57,23 @@ setContent5() {
 }
 
 search() {
-  echo "Search result: "
-  find $DIRECTORY2 -type f -size +"$BIGGERTHAN3"k -size -"$SMALLERTHAN4"k -name "$FILENAME1" -exec grep -iRl $CONTENT5 $DIRECTORY {} \; -exec du -ah {} \;
-  echo "------Executed command------"
-  echo "find $DIRECTORY2 -type f -size +"$BIGGERTHAN3"k -size -"$SMALLERTHAN4"k -name "$FILENAME1" -exec du -ah {} \; -exec grep -Ril "$CONTENT5" {} \;"
+  #echo "----- Executed command -----"
+  #echo "find $DIRECTORY2 -type f -size +"$BIGGERTHAN3"k -size -"$SMALLERTHAN4"k -name "$FILENAME1" -exec grep -iRl "$CONTENT5" $DIRECTORY2/$FILENAME1 {} \;"
+  echo "------Search result: -------"
+  declare STAR='*'
+  if [ "${FILENAME1}" = "${STAR}" ]; then
+    echo "Wersja gdy filename jest gwiazdka"
+    find $DIRECTORY2 -type f -size +"$BIGGERTHAN3"k -size -"$SMALLERTHAN4"k -name "$FILENAME1" -exec grep -iRl "$CONTENT5" $DIRECTORY2 {} \; > result.txt
+    cat result.txt | sort | uniq
+    echo "----- Executed command -----"
+    echo "find $DIRECTORY2 -type f -size +"$BIGGERTHAN3"k -size -"$SMALLERTHAN4"k -name "$FILENAME1" -exec grep -iRl "$CONTENT5" $DIRECTORY2 {} \; | uniq"
+  else
+    echo "filename rozny od gwiazdki"
+    find $DIRECTORY2 -type f -size +"$BIGGERTHAN3"k -size -"$SMALLERTHAN4"k -name "$FILENAME1" -exec grep -iRl "$CONTENT5" $DIRECTORY2/$FILENAME1 {} \; > result.txt
+    cat result.txt | sort | uniq
+    echo "----- Executed command -----"
+    echo "find $DIRECTORY2 -type f -size +"$BIGGERTHAN3"k -size -"$SMALLERTHAN4"k -name "$FILENAME1" -exec grep -iRl "$CONTENT5" $DIRECTORY2/$FILENAME1 {} \; | uniq"
+  fi
 }
 
 getOption() {
