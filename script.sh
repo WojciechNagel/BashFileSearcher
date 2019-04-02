@@ -9,9 +9,8 @@ echo "--------------------------------------------------------------------------
 declare FILENAME1="*"
 declare DIRECTORY2="/"
 declare BIGGERTHAN3="0"
-declare SMALLERTHAN4="3138288"
+declare SMALLERTHAN4="99999999"
 declare CONTENT5=""
-declare ENTER="(Confirm by ENTER)"
 
 optionsView() {
   echo "--------------------------------------------------------------------------------"
@@ -26,54 +25,51 @@ optionsView() {
   echo "--------------------------------------------------------------------------------"
 }
 
+declare ENTER="(Confirm by ENTER)"
+
 setFileName1() {
   clear
-  echo "Enter the name of the file you are looking for $ENTER: "
+  echo "Enter the NAME of the file you are looking for $ENTER: "
   read FILENAME1
 }
 
 setPathToDirectory2() {
   clear
-  echo "Enter the path to the searched directory $ENTER: "
+  echo "Enter the PATH  to the searched directory $ENTER: "
   read DIRECTORY2
 }
 
 setBiggerThan3() {
   clear
-  echo "Enter the minimum file size $ENTER: "
+  echo "Enter the MINIMUM file size $ENTER: "
   read BIGGERTHAN3
 }
 
 setSmallerThan4() {
   clear
-  echo "Enter the maximum file size $ENTER: "
+  echo "Enter the MAXIMUM file size $ENTER: "
   read SMALLERTHAN4
 }
 
 setContent5() {
   clear
-  echo "Enter the content you are looking for in the file $ENTER: "
+  echo "Enter the CONTENT you are looking for in the file $ENTER: "
   read CONTENT5
 }
 
 search() {
-  #echo "----- Executed command -----"
-  #echo "find $DIRECTORY2 -type f -size +"$BIGGERTHAN3"k -size -"$SMALLERTHAN4"k -name "$FILENAME1" -exec grep -iRl "$CONTENT5" $DIRECTORY2/$FILENAME1 {} \;"
-  echo "------Search result: -------"
   declare STAR='*'
   if [ "${FILENAME1}" = "${STAR}" ]; then
-    echo "Wersja gdy filename jest gwiazdka"
-    find $DIRECTORY2 -type f -size +"$BIGGERTHAN3"k -size -"$SMALLERTHAN4"k -name "$FILENAME1" -exec grep -iRl "$CONTENT5" $DIRECTORY2 {} \; > result.txt
-    cat result.txt | sort | uniq
+    find $DIRECTORY2 -type f -size +"$BIGGERTHAN3"k -size -"$SMALLERTHAN4"k -name "$FILENAME1" -exec grep -iRl "$CONTENT5" $DIRECTORY2 {} \; 2>&1 | grep -v 'Permission denied' | grep -v 'No such file or directory' > result.txt
     echo "----- Executed command -----"
     echo "find $DIRECTORY2 -type f -size +"$BIGGERTHAN3"k -size -"$SMALLERTHAN4"k -name "$FILENAME1" -exec grep -iRl "$CONTENT5" $DIRECTORY2 {} \; | uniq"
   else
-    echo "filename rozny od gwiazdki"
-    find $DIRECTORY2 -type f -size +"$BIGGERTHAN3"k -size -"$SMALLERTHAN4"k -name "$FILENAME1" -exec grep -iRl "$CONTENT5" $DIRECTORY2/$FILENAME1 {} \; > result.txt
-    cat result.txt | sort | uniq
+    find $DIRECTORY2 -type f -size +"$BIGGERTHAN3"k -size -"$SMALLERTHAN4"k -name "$FILENAME1" -exec grep -iRl "$CONTENT5" $DIRECTORY2/$FILENAME1 {} \; 2>&1 | grep -v 'Permission denied'| grep -v 'No such file or directory' > result.txt
     echo "----- Executed command -----"
     echo "find $DIRECTORY2 -type f -size +"$BIGGERTHAN3"k -size -"$SMALLERTHAN4"k -name "$FILENAME1" -exec grep -iRl "$CONTENT5" $DIRECTORY2/$FILENAME1 {} \; | uniq"
   fi
+  echo "------Search result: -------"
+  cat result.txt | sort | uniq
 }
 
 getOption() {
@@ -97,7 +93,6 @@ getOption() {
   fi
 }
 
-declare OPTION
 while [[ $OPTION != 7 ]] ; do                     #Czy OPTION jest różne od 7
   optionsView
   read OPTION                                     #Wprowadz OPTION
